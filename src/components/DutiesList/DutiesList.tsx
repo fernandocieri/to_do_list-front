@@ -1,9 +1,14 @@
 import { useState, useEffect } from "react";
 import { getDuties, patchDuty } from "../../services/API";
-import { DutyProps } from "./types";
 import Duty from "./Duty";
 
 import { List, Checkbox } from "antd";
+
+interface DutyProps {
+  id: string;
+  name: string;
+  done: boolean;
+}
 
 export default function DutiesList() {
   const [duties, setDuties] = useState<DutyProps[]>([]);
@@ -18,7 +23,7 @@ export default function DutiesList() {
       if (error instanceof Error) {
         alert(error.message);
       } else {
-        alert("An unknwon error has occured");
+        alert("An unknown error has occured");
       }
     }
   };
@@ -44,7 +49,7 @@ export default function DutiesList() {
       if (error instanceof Error) {
         alert(error.message);
       } else {
-        alert("An unknwon error has occured");
+        alert("An unknown error has occured");
       }
     }
   };
