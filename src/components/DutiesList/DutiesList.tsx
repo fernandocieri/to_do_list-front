@@ -51,6 +51,22 @@ export default function DutiesList() {
     }
   };
 
+  const updateDutyName = async (id: string, name: string) => {
+    try {
+      await patchDuty(id, name);
+      // find duty-to-update in duties and modify it
+      setDuties((prevDuties) =>
+        prevDuties.map((duty) => (duty.id === id ? { ...duty, name } : duty))
+      );
+    } catch (error) {
+      if (error instanceof Error) {
+        alert(error.message);
+      } else {
+        alert("An unknown error has occured");
+      }
+    }
+  };
+
   const removeDuty = async (id: string) => {
     try {
       await deleteDuty(id);
@@ -78,6 +94,7 @@ export default function DutiesList() {
           name={item.name}
           done={item.done}
           updateDutyCompletion={updateDutyCompletion}
+          updateDutyName={updateDutyName}
           removeDuty={removeDuty}
         />
       )}
