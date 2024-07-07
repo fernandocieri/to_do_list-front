@@ -4,11 +4,12 @@ import { DutyProps } from "./types";
 import { List } from "antd";
 import DutiesListItem from "./DutiesListItem";
 import DutiesListFooter from "./DutiesListFooter";
+import DutiesListHeader from "./DutiesListHeader";
 
 export default function DutiesList() {
   const [duties, setDuties] = useState<DutyProps[]>([]);
   const [pendingDuties, setPendingDuties] = useState<DutyProps[]>([]);
-  const [hideDone, setHideDone] = useState(false);
+  const [hideDoneDuties, setHideDoneDuties] = useState(false);
 
   const fetchDuties = async () => {
     try {
@@ -28,13 +29,13 @@ export default function DutiesList() {
   }, []);
 
   useEffect(() => {
-    if (hideDone) {
+    if (hideDoneDuties) {
       const filteredDuties = duties.filter((duty: DutyProps) => {
         return duty.done === false;
       });
       setPendingDuties(filteredDuties);
     }
-  }, [hideDone, duties]);
+  }, [hideDoneDuties, duties]);
 
   const updateDutyCompletion = async (id: string, done: boolean) => {
     try {
@@ -104,10 +105,16 @@ export default function DutiesList() {
   return (
     <List
       bordered
-      dataSource={hideDone ? pendingDuties : duties}
+      dataSource={hideDoneDuties ? pendingDuties : duties}
+      header={
+        <DutiesListHeader
+          toggleHideDoneDuties={(value) => setHideDoneDuties(value)}
+        />
+      }
       footer={<DutiesListFooter addDuty={addDuty} />}
       renderItem={(item: DutyProps) => (
         <DutiesListItem
+          key={item.id}
           id={item.id}
           name={item.name}
           done={item.done}
