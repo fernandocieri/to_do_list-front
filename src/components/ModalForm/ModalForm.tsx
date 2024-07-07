@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Modal, Input } from "antd";
+import { Modal, Input, Typography } from "antd";
+const { Text } = Typography;
 
 interface ModalFormProps {
   title: string;
@@ -19,8 +20,13 @@ export default function ModalForm({
   toggleModal,
 }: ModalFormProps) {
   const [inputValue, setInputValue] = useState("");
+  const [inputError, setInputError] = useState<undefined | string>();
 
   const handleOk = () => {
+    if (inputValue.length === 0) {
+      setInputError("This field is required");
+      return;
+    }
     onSubmit(inputValue);
     toggleModal(false);
   };
@@ -43,6 +49,7 @@ export default function ModalForm({
           onChange={(event) => setInputValue(event.target.value)}
           autoFocus
         />
+        {inputError && <Text type="danger">{inputError}</Text>}
       </Modal>
     )
   );
