@@ -3,6 +3,7 @@ import { getDuties, patchDuty, postDuty, deleteDuty } from "../../services/API";
 import { DutyProps } from "./types";
 import { List } from "antd";
 import DutiesListItem from "./DutiesListItem";
+import DutiesListFooter from "./DutiesListFooter";
 
 export default function DutiesList() {
   const [duties, setDuties] = useState<DutyProps[]>([]);
@@ -104,6 +105,7 @@ export default function DutiesList() {
     <List
       bordered
       dataSource={hideDone ? pendingDuties : duties}
+      footer={<DutiesListFooter addDuty={addDuty} />}
       renderItem={(item: DutyProps) => (
         <DutiesListItem
           id={item.id}
