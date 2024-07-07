@@ -29,3 +29,5 @@ Once running, go to http://localhost:5173/.
 ```shell
 npm run test
 ```
+
+![Client screenshot](/public/app-screenshot.png)
