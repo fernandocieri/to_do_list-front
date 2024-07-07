@@ -41,6 +41,7 @@ export default function ModalForm({
           placeholder={placeholder || ""}
           defaultValue={defaultValue}
           onChange={(event) => setInputValue(event.target.value)}
+          autoFocus
         />
       </Modal>
     )
