@@ -1,14 +1,8 @@
 import { useState, useEffect } from "react";
-import { getDuties, patchDuty } from "../../services/API";
-import Duty from "./Duty";
-
-import { List, Checkbox } from "antd";
-
-interface DutyProps {
-  id: string;
-  name: string;
-  done: boolean;
-}
+import { getDuties, patchDuty, deleteDuty } from "../../services/API";
+import { DutyProps } from "./types";
+import { List } from "antd";
+import DutiesListItem from "./DutiesListItem";
 
 export default function DutiesList() {
   const [duties, setDuties] = useState<DutyProps[]>([]);
@@ -43,7 +37,10 @@ export default function DutiesList() {
 
   const updateDutyCompletion = async (id: string, done: boolean) => {
     await patchDuty(id, undefined, done);
-    // find this duty in duties state and update
+    // find duty-to-update in duties and modify it
+    setDuties((prevDuties) =>
+      prevDuties.map((duty) => (duty.id === id ? { ...duty, done } : duty))
+    );
     try {
     } catch (error) {
       if (error instanceof Error) {
@@ -59,18 +56,12 @@ export default function DutiesList() {
       bordered
       dataSource={hideDone ? pendingDuties : duties}
       renderItem={(item: DutyProps) => (
-        <List.Item
-          actions={[
-            <Checkbox
-              defaultChecked={item.done}
-              onChange={(event) =>
-                updateDutyCompletion(item.id, event.target.value)
-              }
-            />,
-          ]}
-        >
-          {item.name}
-        </List.Item>
+        <DutiesListItem
+          id={item.id}
+          name={item.name}
+          done={item.done}
+          updateDutyCompletion={updateDutyCompletion}
+        />
       )}
     />
   );
