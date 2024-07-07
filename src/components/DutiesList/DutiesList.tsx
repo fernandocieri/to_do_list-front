@@ -1,10 +1,14 @@
 import { useState, useEffect } from "react";
+// SERVICES
 import { getDuties, patchDuty, postDuty, deleteDuty } from "../../services/API";
+// TYPES
 import { DutyProps } from "./types";
-import { List } from "antd";
+// COMPONENTS
 import DutiesListItem from "./DutiesListItem";
 import DutiesListFooter from "./DutiesListFooter";
 import DutiesListHeader from "./DutiesListHeader";
+// THIRD PARTY COMPONENTS
+import { List } from "antd";
 
 export default function DutiesList() {
   const [duties, setDuties] = useState<DutyProps[]>([]);
