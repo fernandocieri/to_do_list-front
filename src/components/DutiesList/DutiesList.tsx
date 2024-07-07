@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getDuties, patchDuty, deleteDuty } from "../../services/API";
+import { getDuties, patchDuty, postDuty, deleteDuty } from "../../services/API";
 import { DutyProps } from "./types";
 import { List } from "antd";
 import DutiesListItem from "./DutiesListItem";
@@ -58,6 +58,22 @@ export default function DutiesList() {
       setDuties((prevDuties) =>
         prevDuties.map((duty) => (duty.id === id ? { ...duty, name } : duty))
       );
+    } catch (error) {
+      if (error instanceof Error) {
+        alert(error.message);
+      } else {
+        alert("An unknown error has occured");
+      }
+    }
+  };
+
+  const addDuty = async (name: string) => {
+    try {
+      const newDutyId = await postDuty(name);
+      setDuties((prevDuties) => [
+        ...prevDuties,
+        { id: newDutyId, name: name, done: false },
+      ]);
     } catch (error) {
       if (error instanceof Error) {
         alert(error.message);
