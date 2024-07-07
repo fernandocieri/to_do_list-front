@@ -36,12 +36,29 @@ export default function DutiesList() {
   }, [hideDone, duties]);
 
   const updateDutyCompletion = async (id: string, done: boolean) => {
-    await patchDuty(id, undefined, done);
-    // find duty-to-update in duties and modify it
-    setDuties((prevDuties) =>
-      prevDuties.map((duty) => (duty.id === id ? { ...duty, done } : duty))
-    );
     try {
+      await patchDuty(id, undefined, done);
+      // find duty-to-update in duties and modify it
+      setDuties((prevDuties) =>
+        prevDuties.map((duty) => (duty.id === id ? { ...duty, done } : duty))
+      );
+    } catch (error) {
+      if (error instanceof Error) {
+        alert(error.message);
+      } else {
+        alert("An unknown error has occured");
+      }
+    }
+  };
+
+  const removeDuty = async (id: string) => {
+    try {
+      await deleteDuty(id);
+      setDuties((prevDuties) =>
+        prevDuties.filter((duty) => {
+          return duty.id !== id;
+        })
+      );
     } catch (error) {
       if (error instanceof Error) {
         alert(error.message);
@@ -61,6 +78,7 @@ export default function DutiesList() {
           name={item.name}
           done={item.done}
           updateDutyCompletion={updateDutyCompletion}
+          removeDuty={removeDuty}
         />
       )}
     />

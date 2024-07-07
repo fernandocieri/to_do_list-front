@@ -6,4 +6,5 @@ export interface DutyProps {
 
 export interface DutiesListItemProps extends DutyProps {
   updateDutyCompletion: (id: string, done: boolean) => void;
+  removeDuty: (id: string) => void;
 }

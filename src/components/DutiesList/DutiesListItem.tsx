@@ -7,6 +7,7 @@ export default function DutiesListItem({
   name,
   done,
   updateDutyCompletion,
+  removeDuty,
 }: DutiesListItemProps) {
   return (
     <List.Item
@@ -20,6 +21,7 @@ export default function DutiesListItem({
           type="default"
           shape="circle"
           danger
+          onClick={() => removeDuty(id)}
           icon={<DeleteOutlined />}
         />,
       ]}
