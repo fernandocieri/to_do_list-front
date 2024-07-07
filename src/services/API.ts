@@ -19,7 +19,7 @@ export const postDuty = async (name: string) => {
   try {
     const newDuty = await axios.post(`${BASE_URL}/duties/`, { name: name });
     console.log(newDuty);
-    return newDuty.data.message;
+    return newDuty.data.id;
   } catch (error) {
     if (error instanceof Error) {
       throw new Error(error.message);
