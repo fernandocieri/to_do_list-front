@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Modal, Input, Typography } from "antd";
 const { Text } = Typography;
 
@@ -26,14 +26,39 @@ export default function ModalForm({
     if (inputValue.length === 0) {
       setInputError("This field is required");
       return;
+    } else if (inputError) {
+      setInputError(undefined);
     }
+
+    if (defaultValue === inputValue) {
+      toggleModal(false);
+      return;
+    }
+
     onSubmit(inputValue);
+    setInputValue("");
     toggleModal(false);
   };
 
   const handleCancel = () => {
+    if (
+      defaultValue &&
+      defaultValue.length > 0 &&
+      defaultValue !== inputValue
+    ) {
+      setInputValue(defaultValue);
+    } else {
+      setInputValue("");
+    }
+    setInputError(undefined);
     toggleModal(false);
   };
+
+  useEffect(() => {
+    if (defaultValue && defaultValue.length > 0) {
+      setInputValue(defaultValue);
+    }
+  }, [defaultValue]);
 
   return (
     isModalOpen && (
