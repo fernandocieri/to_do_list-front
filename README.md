@@ -12,7 +12,7 @@ This project is a client that displays a To-Do List and allows to make CRUD oper
 1. **Clone the Project**:
 ```shell
 git clone git@github.com:fernandocieri/to_do_list-front.git
-cd to_do_list-back
+cd to_do_list-front
 ```
 
 2. **Install Dependencies and Start the Server**:
